@@ -1,0 +1,2 @@
+sql : SELECT * FROM produit ORDER BY nomProduit; 
+error : Unknown column 'nomProduit' in 'order clause'

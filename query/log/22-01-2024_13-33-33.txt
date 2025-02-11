@@ -1,0 +1,2 @@
+sql : SELECT * FROM utilisateur INNER JOIN accesutilisateur ON utilisateur.idUtilisateur = accesutilisateur.idUtilisateur WHERE utilisateur.motDePasseUtilisateur = 'é'àèà' AND utilisateur.statutUtilisateur = 0; 
+error : You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'àèà' AND utilisateur.statutUtilisateur = 0' at line 1
