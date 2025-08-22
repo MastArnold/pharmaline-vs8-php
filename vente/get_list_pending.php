@@ -12,7 +12,7 @@
     $sql = "SELECT * FROM vente 
             INNER JOIN utilisateur ON vente.idOperateur = utilisateur.idUtilisateur 
             INNER JOIN client ON vente.idClient = client.idClient 
-            WHERE statutVente = 2
+            WHERE statutVente = 2 OR statutVente = 3 
             ORDER BY idVente DESC";
 
     try{

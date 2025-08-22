@@ -27,10 +27,23 @@
             $stmt_vente = $pdo->prepare($vente->get_insert_query_prepared());
             $stmt_vente->execute($vente->get_values_prepared());
 
-            $idVente = $pdo->lastInsertId();
+            $idVente = 0;
+            $stmt_last_insert = $pdo->prepare("SELECT idVente FROM vente WHERE dateVente = :datev AND heureVente = :heure");
+            $stmt_last_insert->execute([":datev"=>$vente->date, ":heure"=>$vente->heure]);
+            $last_ventes = $stmt_last_insert->fetchAll();
+            if(count($last_ventes) > 0){
+                $idVente = $last_ventes[0]['idVente'];
+            }else{
+                throw new Exception("La vente n'a pas pu être insérré ! [SQL] => SELECT idVente FROM vente WHERE dateVente = '" . $vente->date . "' AND heureVente LIKE '" . $vente->heure . "%' ");
+            }
+
+            if($idVente == 0){
+                throw new Exception("le dernier id n'a pas pu être récupéré [SQL] => SELECT idVente FROM vente WHERE dateVente = '" . $vente->date . "' AND heureVente LIKE '" . $vente->heure . "%'");
+            }
 
             foreach($transactions as $data_transaction){
                 $transaction = TransactionVente::fromJson($data_transaction);
+                $transaction->idVente = $idVente;
                 $stmt_transaction = $pdo->prepare($transaction->get_insert_query_prepared());
                 $stmt_transaction->execute($transaction->get_values_prepared());
             }

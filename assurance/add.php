@@ -23,7 +23,7 @@
             $stmt->execute($insurance->get_insert_values_prepared());
         
             $pdo->commit();            
-            print json_encode(["status"=>'success', "message"=>"OTP enregistrée avec succès !"]);
+            print json_encode(["status"=>"success", "message"=>"OTP enregistrée avec succès !"]);
         } catch (Exception $e) {
             $pdo->rollBack();
             print json_encode(["status"=>'error', "message"=>"Erreur (" . $e->getLine() . ") : " . $e->getMessage()]);

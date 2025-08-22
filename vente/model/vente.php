@@ -53,6 +53,16 @@ class Vente{
         );
     }
 
+    // SELECT
+
+    public static function get_select_byProduit_query_prepared(){
+        return "SELECT * 
+                INNER JOIN venteDetail ON venteDetail.idVente = vente.idVente 
+                INNER JOIN utilisateur ON utilisateur.idUtilisateur = vente.idUtilisateur 
+                INNER JOIN client ON vente.idClient = client.idClient 
+                FROM venteDetail WHERE venteDetail.idProduit = :id";
+    }
+
     // INSERT
 
     public function get_insert_query(){

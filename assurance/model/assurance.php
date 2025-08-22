@@ -62,8 +62,9 @@ class Assurance{
                             pourcentage_pce, 
                             telephone_assurance, 
                             adresse_assurance, 
-                            ifu) 
-                VALUES (:code, :label, :percent, :phone, :address, :ifu);";
+                            ifu,
+                            actif) 
+                VALUES (:code, :label, :percent, :phone, :address, :ifu, :actif);";
     }
 
     public function get_insert_values_prepared(){
@@ -73,7 +74,8 @@ class Assurance{
             'percent' => $this->percent,
             'phone' => $this->phone,
             'address' => $this->address,
-            'ifu' => $this->ifu
+            'ifu' => $this->ifu,
+            'actif' => 1
         ];
     }
 

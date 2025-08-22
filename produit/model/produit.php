@@ -55,6 +55,62 @@ class Produit{
         );
     }
 
+    public function get_values_prepared(){
+        return [
+            "id" => $this->id,
+            "nomNc" => $this->nomNc,
+            "nomDci" => $this->nomDci,
+            "categorie" => $this->categorie,
+            "rayon" => $this->rayon,
+            "prixVente" => $this->prixVente,
+            "prixAchat" => $this->prixAchat,
+            "stock" => $this->stock,
+            "limiteStock" => $this->limiteStock,
+            "uniteParBoite" => $this->uniteParBoite,
+            "venteEnDetail" => $this->venteEnDetail,
+            "tva" => $this->tva,
+            "datePeremption" => $this->datePeremption,
+            "sousOrdonnance" => $this->sousOrdonnance,
+            "statut" => $this->statut
+        ];
+    }
+
+    //
+
+    public static function get_select_limit_query_prepared(){
+        return "SELECT * FROM ORDER BY idProduit DESC LIMIT 80";
+    }
+
+    public static function get_select_byNames_query_prepared(){
+        return "SELECT * FROM produit WHERE nomNcProduit = :search OR nomDciProduit = :search";
+    }
+
+    public static function get_select_byNames_values_prepared($search){
+        return [
+            "search" => '%' . $search . '%'
+        ];
+    }
+
+    public static function get_select_byId_query_prepared(){
+        return "SELECT * FROM produit WHERE idProduit = :id";
+    }
+
+    public static function get_idProduit_values_prepared($idProduit){
+        return [
+            "id" => $idProduit
+        ];
+    }
+
+    public static function get_select_counter_query_prepared(){
+        return "SELECT * FROM produitCounter";
+    }
+
+    //
+
+    public static function get_update_counter_query_prepared(){
+        return "UPDATE produitCounter SET counter = counter + 1";
+    }
+
     public function get_insert_query(){
         return "INSERT INTO produit(
             idProduit, 
@@ -127,25 +183,7 @@ class Produit{
         )";
     }
 
-    public function get_insert_values_prepared(){
-        return [
-            "id" => $this->id,
-            "nomNc" => $this->nomNc,
-            "nomDci" => $this->nomDci,
-            "categorie" => $this->categorie,
-            "rayon" => $this->rayon,
-            "prixVente" => $this->prixVente,
-            "prixAchat" => $this->prixAchat,
-            "stock" => $this->stock,
-            "limiteStock" => $this->limiteStock,
-            "uniteParBoite" => $this->uniteParBoite,
-            "venteEnDetail" => $this->venteEnDetail,
-            "tva" => $this->tva,
-            "datePeremption" => $this->datePeremption,
-            "sousOrdonnance" => $this->sousOrdonnance,
-            "statut" => $this->statut
-        ];
-    }
+    //
 
     public static function get_update_query_prepared(){
         return "UPDATE produit SET 
@@ -165,26 +203,6 @@ class Produit{
                 statutProduit = :statut WHERE idProduit = :idProduit";
     }
 
-    public function get_update_values_prepared(){
-        return [
-            "nomNc" => $this->nomNc,
-            "nomDci" => $this->nomDci,
-            "categorie" => $this->categorie,
-            "rayon" => $this->rayon,
-            "prixVente" => $this->prixVente,
-            "prixAchat" => $this->prixAchat,
-            "stock" => $this->stock,
-            "limiteStock" => $this->limiteStock,
-            "uniteParBoite" => $this->uniteParBoite,
-            "venteEnDetail" => $this->venteEnDetail,
-            "tva" => $this->tva,
-            "datePeremption" => $this->datePeremption,
-            "sousOrdonnance" => $this->sousOrdonnance,
-            "statut" => $this->statut,
-            "idProduit" => $this->id
-        ];
-    }
-
     public static function get_update_add_stock_query_prepared(){
         return "UPDATE produit SET stockProduit = stockProduit + :quantite WHERE idProduit = :idProduit";
     }
@@ -198,6 +216,20 @@ class Produit{
             "quantite" => $quantite,
             "idProduit" => $idProduit
         ];
+    }
+
+    //
+
+    public static function get_delete_query_prepared(){
+        return "DELETE FROM produit WHERE idProduit = :id";
+    }
+
+    public static function get_inactive_query_prepared(){
+        return "UPDATE produit SET statutProduit = 1 WHERE idProduit = :id";
+    }
+
+    public static function get_active_query_prepared(){
+        return "UPDATE produit SET statutProduit = 0 WHERE idProduit = :id";
     }
 
 }
